@@ -13,10 +13,14 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [ "*" ]
+    branches:    
+      - '*'         # matches every branch that doesn't contain a '/'
+      - '*/*'       # matches every branch containing a single '/'
+      - '**'        # matches every branch
+      - '!master'   # excludes master
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ "*" ]
+    branches: [ "master" ]
   schedule:
     - cron: '19 21 * * 4'
 
