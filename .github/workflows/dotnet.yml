@@ -11,10 +11,8 @@ name: .NET
 on:
   workflow_run:
     workflows: ["CodeQL"]
-    types: [requested]
-    branches:
-      - '**'
-
+    types:
+      - completed
 jobs:
   build:
 
