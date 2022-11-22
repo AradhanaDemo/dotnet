@@ -3,11 +3,17 @@
 
 name: .NET
 
+#on:
+#  push:
+#    branches: [ "master" ]
+#  pull_request:
+#    branches: [ "master" ]
 on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+  workflow_run:
+    workflows: ["CodeQL"]
+    types: [requested]
+    branches:
+      - '**'
 
 jobs:
   build:
