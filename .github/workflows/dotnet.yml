@@ -3,16 +3,13 @@
 
 name: .NET
 
-#on:
-#  push:
-#    branches: [ "master" ]
-#  pull_request:
-#    branches: [ "master" ]
 on:
-  workflow_run:
-    workflows: ["CodeQL"]
-    types:
-      - completed
+  push:
+    branches:    
+      - '*'         # matches every branch that doesn't contain a '/'
+      - '*/*'       # matches every branch containing a single '/'
+      - '**'        # matches every branch
+      - '!master'   # excludes master
 jobs:
   build:
 
@@ -30,3 +27,11 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+  jiraupdate:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Comment on issue
+      uses: atlassian/gajira-comment@v3
+      with:
+      issue: PDT-24
+      comment: ${{ github.event.pusher.name }} pushed to repository: ${{ github.event.repository.full_name }}
